@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f6f3ea;
+            --panel: #fffdf8;
+            --line: #d9d0bf;
+            --text: #2c261d;
+            --muted: #6e6557;
+            --accent: #a14d2c;
+            --warn: #fff1d6;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: radial-gradient(circle at top, #fff6dc 0%, var(--bg) 52%);
+            color: var(--text);
+            font-family: "Iowan Old Style", "Apple SD Gothic Neo", Georgia, serif;
+        }
+
+        main {
+            max-width: 760px;
+            margin: 56px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            box-shadow: 0 18px 50px rgba(71, 50, 19, 0.08);
+            overflow: hidden;
+        }
+
+        .hero {
+            padding: 28px 28px 20px;
+            border-bottom: 1px solid var(--line);
+            background: linear-gradient(135deg, rgba(161, 77, 44, 0.1), rgba(255, 255, 255, 0));
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(161, 77, 44, 0.12);
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        h1 {
+            margin: 14px 0 8px;
+            font-size: 34px;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            margin: 0;
+            color: var(--muted);
+            font-size: 17px;
+            line-height: 1.5;
+        }
+
+        .body {
+            padding: 24px 28px 30px;
+        }
+
+        .section + .section {
+            margin-top: 18px;
+        }
+
+        .label {
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .value {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        .code {
+            padding: 14px 16px;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            background: #fcfaf5;
+            font-family: "SFMono-Regular", Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .hint {
+            margin-top: 20px;
+            padding: 16px 18px;
+            border-radius: 16px;
+            background: var(--warn);
+            border: 1px solid #f0d8a8;
+        }
+
+        .hint strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .actions {
+            margin-top: 24px;
+        }
+
+        .actions a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="card">
+        <div class="hero">
+            <div class="status" th:text="'HTTP ' + ${status}">HTTP 500</div>
+            <h1>요청을 처리할 수 없습니다.</h1>
+            <p class="subtitle">요청을 완료할 수 없습니다.</p>
+        </div>
+
+        <div class="body">
+            <div class="section">
+                <div class="label">원래 요청 경로</div>
+                <p class="value" th:text="${path}">/oauth2/authorize</p>
+            </div>
+
+            <div class="section" th:if="${query != null and !#strings.isEmpty(query)}">
+                <div class="label">Query String</div>
+                <div class="code" th:text="${query}">response_type=code...</div>
+            </div>
+
+            <div class="section">
+                <div class="label">원인 메시지</div>
+                <div class="code" th:text="${message}">[invalid_request] OAuth 2.0 Parameter: redirect_uri</div>
+            </div>
+
+            <div class="actions">
+                <a th:href="@{/login}">로그인 페이지로 돌아가기</a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

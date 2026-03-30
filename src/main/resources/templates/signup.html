@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign Up</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f5f1e7;
+            --panel: #fffdf8;
+            --line: #dccfb7;
+            --text: #2f281f;
+            --muted: #786c5c;
+            --accent: #a64b2a;
+            --accent-dark: #7d361c;
+            --soft: #fff4de;
+            --danger: #a03232;
+            --danger-soft: #fff2f0;
+            --shadow: 0 24px 60px rgba(63, 43, 19, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                    radial-gradient(circle at top right, rgba(255, 235, 183, 0.7), transparent 30%),
+                    linear-gradient(180deg, #faf6eb 0%, var(--bg) 100%);
+            color: var(--text);
+            font-family: "Iowan Old Style", "Apple SD Gothic Neo", Georgia, serif;
+        }
+
+        main {
+            width: min(560px, calc(100% - 32px));
+            margin: 56px auto;
+        }
+
+        .panel {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            background: var(--panel);
+            box-shadow: var(--shadow);
+        }
+
+        .panel h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .alert {
+            padding: 14px 16px;
+            border-radius: 16px;
+            border: 1px solid #e8c0ba;
+            background: var(--danger-soft);
+            color: var(--danger);
+            line-height: 1.5;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+
+        .field input[type="text"],
+        .field input[type="email"],
+        .field input[type="password"] {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: #fffdfa;
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        .field input:focus {
+            outline: 2px solid rgba(166, 75, 42, 0.18);
+            border-color: var(--accent);
+        }
+
+        .error {
+            color: var(--danger);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .agreements {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 18px;
+            border-radius: 18px;
+            border: 1px solid var(--line);
+            background: #fcfaf5;
+        }
+
+        .agreement {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .agreement input {
+            margin-top: 3px;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--accent);
+        }
+
+        .agreement small {
+            display: block;
+            color: var(--muted);
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px 18px;
+            border: 0;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #b4532f 0%, var(--accent-dark) 100%);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        @media (max-width: 920px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<main>
+        <section class="panel">
+            <h2>Sign Up</h2>
+
+            <form th:action="@{/signup}" th:object="${signupRequest}" method="post">
+                <div class="alert" th:if="${#fields.hasAnyErrors()}">
+                    입력값을 다시 확인해 주세요.
+                </div>
+
+                <div class="grid">
+                    <div class="field full">
+                        <label for="email">Email</label>
+                        <input id="email" type="email" th:field="*{email}" autocomplete="email" />
+                        <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    </div>
+
+                    <div class="field">
+                        <label for="displayName">Display Name</label>
+                        <input id="displayName" type="text" th:field="*{displayName}" autocomplete="nickname" />
+                        <div class="error" th:if="${#fields.hasErrors('displayName')}" th:errors="*{displayName}"></div>
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <input id="password" type="password" th:field="*{password}" autocomplete="new-password" />
+                        <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                    </div>
+
+                    <div class="field full">
+                        <label for="passwordConfirm">Password Confirm</label>
+                        <input id="passwordConfirm" type="password" th:field="*{passwordConfirm}" autocomplete="new-password" />
+                        <div class="error" th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></div>
+                    </div>
+                </div>
+
+                <div class="agreements">
+                    <label class="agreement">
+                        <input type="checkbox" th:field="*{termsAgreed}" />
+                        <span>
+                            [필수] 이용약관에 동의합니다.
+                        </span>
+                    </label>
+                    <div class="error" th:if="${#fields.hasErrors('termsAgreed')}" th:errors="*{termsAgreed}"></div>
+
+                    <label class="agreement">
+                        <input type="checkbox" th:field="*{privacyAgreed}" />
+                        <span>
+                            [필수] 개인정보 수집 및 이용에 동의합니다.
+                        </span>
+                    </label>
+                    <div class="error" th:if="${#fields.hasErrors('privacyAgreed')}" th:errors="*{privacyAgreed}"></div>
+
+                    <label class="agreement">
+                        <input type="checkbox" th:field="*{marketingAgreed}" />
+                        <span>
+                            [선택] 마케팅 정보 수신에 동의합니다.
+                        </span>
+                    </label>
+                </div>
+
+                <div class="actions">
+                    <button type="submit">Create account</button>
+                    <a class="link" th:href="@{/login}">Already have an account?</a>
+                </div>
+            </form>
+        </section>
+</main>
+</body>
+</html>

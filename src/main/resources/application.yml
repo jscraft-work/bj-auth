@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/bj_auth}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+server:
+  port: 9000
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-exception: true
+
+auth:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://127.0.0.1:3000,http://localhost:3000}
+  client:
+    bj-tetris-web:
+      redirect-uri: ${OAUTH_REDIRECT_URI:http://127.0.0.1:9001/auth/callback}
+      post-logout-redirect-uri: ${OAUTH_POST_LOGOUT_REDIRECT_URI:http://127.0.0.1:5500}
+  jwk:
+    key-file: ${JWK_KEY_FILE:}

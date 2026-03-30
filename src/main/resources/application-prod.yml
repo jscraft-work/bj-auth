@@ -1,0 +1,12 @@
+spring:
+  security:
+    oauth2:
+      authorizationserver:
+        issuer: https://auth.jscraft.work
+
+server:
+  forward-headers-strategy: native
+  error:
+    include-message: never
+    include-binding-errors: never
+    include-exception: false
