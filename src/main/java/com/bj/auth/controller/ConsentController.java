@@ -1,5 +1,6 @@
 package com.bj.auth.controller;
 
+import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.stereotype.Controller;
@@ -31,12 +32,14 @@ public class ConsentController {
     ) {
         RegisteredClient client = registeredClientRepository.findByClientId(clientId);
         String clientName = client != null ? client.getClientName() : clientId;
-        Set<String> scopes = new LinkedHashSet<>(Arrays.asList(scope.split(" ")));
+        Set<String> allScopes = new LinkedHashSet<>(Arrays.asList(scope.split(" ")));
+        Set<String> displayScopes = new LinkedHashSet<>(allScopes);
+        displayScopes.remove(OidcScopes.OPENID);
 
         model.addAttribute("clientId", clientId);
         model.addAttribute("clientName", clientName);
         model.addAttribute("state", state);
-        model.addAttribute("scopes", scopes);
+        model.addAttribute("scopes", displayScopes);
         model.addAttribute("principalName", principal.getName());
 
         return "consent";

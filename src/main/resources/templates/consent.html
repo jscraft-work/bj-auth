@@ -160,6 +160,7 @@
     <form th:action="@{/oauth2/authorize}" method="post">
         <input type="hidden" name="client_id" th:value="${clientId}" />
         <input type="hidden" name="state" th:value="${state}" />
+        <input type="hidden" name="scope" value="openid" />
 
         <div class="scopes">
             <label class="scope-item" th:each="scope : ${scopes}">
@@ -167,7 +168,6 @@
                 <div>
                     <div class="scope-name" th:text="${scope}">scope</div>
                     <div class="scope-desc" th:switch="${scope}">
-                        <span th:case="'openid'">기본 계정 식별 정보</span>
                         <span th:case="'profile'">프로필 정보 (닉네임)</span>
                         <span th:case="'game'">게임 데이터 접근</span>
                         <span th:case="*">추가 권한</span>
