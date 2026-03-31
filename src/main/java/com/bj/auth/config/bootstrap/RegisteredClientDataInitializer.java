@@ -26,11 +26,9 @@ public class RegisteredClientDataInitializer {
     public CommandLineRunner registeredClientSeeder(RegisteredClientRepository registeredClientRepository) {
         return args -> {
             RegisteredClient existingClient = registeredClientRepository.findByClientId("bj-tetris-web");
-            if (existingClient != null) {
-                return;
-            }
+            String id = existingClient != null ? existingClient.getId() : UUID.randomUUID().toString();
 
-            RegisteredClient bjTetrisWebClient = RegisteredClient.withId(UUID.randomUUID().toString())
+            RegisteredClient bjTetrisWebClient = RegisteredClient.withId(id)
                     .clientId("bj-tetris-web")
                     .clientAuthenticationMethod(ClientAuthenticationMethod.NONE)
                     .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
