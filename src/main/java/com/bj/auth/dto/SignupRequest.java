@@ -1,5 +1,6 @@
 package com.bj.auth.dto;
 
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -22,7 +23,10 @@ public class SignupRequest {
     @Size(max = 50)
     private String displayName = "";
 
+    @AssertTrue(message = "이용약관에 동의해야 합니다.")
     private boolean termsAgreed;
+
+    @AssertTrue(message = "개인정보 수집 및 이용에 동의해야 합니다.")
     private boolean privacyAgreed;
     private boolean marketingAgreed;
 
