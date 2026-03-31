@@ -1,5 +1,6 @@
 package com.bj.auth.config.authorization;
 
+import com.bj.auth.repository.UserRepository;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -9,12 +10,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -63,6 +67,19 @@ public class AuthorizationServerBeansConfig {
             return generateAndSaveJwk(path);
         }
         return new ImmutableJWKSet<>(new JWKSet(generateRsaKey()));
+    }
+
+    @Bean
+    public OAuth2TokenCustomizer<JwtEncodingContext> tokenCustomizer(UserRepository userRepository) {
+        return context -> {
+            if (OidcParameterNames.ID_TOKEN.equals(context.getTokenType().getValue())) {
+                String email = context.getPrincipal().getName();
+                userRepository.findByEmail(email).ifPresent(user -> {
+                    context.getClaims().claim("display_name", user.getDisplayName());
+                    context.getClaims().claim("email", user.getEmail());
+                });
+            }
+        };
     }
 
     private JWKSource<SecurityContext> loadJwkFromFile(Path path) throws IOException, ParseException {
