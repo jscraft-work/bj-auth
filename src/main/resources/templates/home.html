@@ -6,159 +6,156 @@
     <title>BJ Auth</title>
     <style>
         :root {
-            color-scheme: light;
-            --bg: #f5f1e7;
-            --panel: #fffdf8;
-            --line: #dccfb7;
-            --text: #2f281f;
-            --muted: #786c5c;
-            --accent: #a64b2a;
-            --accent-dark: #7d361c;
-            --shadow: 0 24px 60px rgba(63, 43, 19, 0.12);
+            --bg: #f4f4f5;
+            --surface: #ffffff;
+            --surface-alt: #fafafa;
+            --border: #e4e4e7;
+            --text: #09090b;
+            --text-sub: #71717a;
+            --accent: #18181b;
+            --accent-hover: #27272a;
+            --danger: #dc2626;
+            --danger-hover: #b91c1c;
+            --radius: 12px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; margin: 0; }
 
         body {
-            margin: 0;
             min-height: 100vh;
-            background:
-                    radial-gradient(circle at top center, rgba(255, 235, 183, 0.6), transparent 30%),
-                    linear-gradient(180deg, #faf6eb 0%, var(--bg) 100%);
+            background: var(--bg);
             color: var(--text);
-            font-family: "Iowan Old Style", "Apple SD Gothic Neo", Georgia, serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px 16px;
+        }
+
+        .nav-brand {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .nav form { margin: 0; }
+
+        .nav button {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-sub);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .nav button:hover {
+            color: var(--danger);
+            border-color: var(--danger);
         }
 
         main {
-            width: min(920px, calc(100% - 32px));
-            margin: 52px auto;
-        }
-
-        .shell {
-            border: 1px solid var(--line);
-            border-radius: 26px;
-            overflow: hidden;
-            background: var(--panel);
-            box-shadow: var(--shadow);
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 12px 16px 48px;
         }
 
         .hero {
-            padding: 34px;
-            border-bottom: 1px solid var(--line);
-            background:
-                    linear-gradient(160deg, rgba(255, 241, 213, 0.95), rgba(255, 255, 255, 0)),
-                    linear-gradient(180deg, #f8ecd4 0%, #f3e7d1 100%);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 40px 32px;
+            margin-bottom: 16px;
         }
 
         .eyebrow {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 999px;
-            background: rgba(166, 75, 42, 0.1);
-            color: var(--accent);
             font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
+            font-weight: 600;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
+            color: var(--text-sub);
+            margin-bottom: 8px;
         }
 
         h1 {
-            margin: 18px 0 10px;
-            font-size: clamp(36px, 6vw, 54px);
-            line-height: 0.98;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
         }
 
         .lead {
-            margin: 0;
-            max-width: 34ch;
-            color: var(--muted);
-            font-size: 18px;
-            line-height: 1.6;
-        }
-
-        .body {
-            padding: 28px 34px 34px;
-        }
-
-        .card {
-            padding: 20px;
-            border: 1px solid var(--line);
-            border-radius: 18px;
-            background: #fcfaf5;
-        }
-
-        .card h2 {
-            margin: 0 0 8px;
-            font-size: 22px;
-        }
-
-        .card p {
-            margin: 0;
-            color: var(--muted);
-            line-height: 1.6;
-        }
-
-        .actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-            flex-wrap: wrap;
-        }
-
-        .button,
-        button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 14px 18px;
-            border-radius: 14px;
             font-size: 16px;
-            font-weight: 700;
-            text-decoration: none;
-            cursor: pointer;
+            color: var(--text-sub);
+            line-height: 1.6;
         }
 
-        .button {
-            background: #fff6e8;
-            border: 1px solid var(--line);
-            color: var(--accent);
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
-        button {
-            border: 0;
-            background: linear-gradient(180deg, #b4532f 0%, var(--accent-dark) 100%);
-            color: white;
+        .info-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
         }
 
-        form {
-            margin: 0;
+        .info-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-sub);
+            margin-bottom: 4px;
         }
 
+        .info-value {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 540px) {
+            .info-grid { grid-template-columns: 1fr; }
+            .hero { padding: 28px 20px; }
+        }
     </style>
 </head>
 <body>
+<nav class="nav">
+    <div class="nav-brand">BJ Auth</div>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">로그아웃</button>
+    </form>
+</nav>
+
 <main>
-    <div class="shell">
-        <section class="hero">
-            <div class="eyebrow">BJ Auth</div>
-            <h1>My Account</h1>
-            <p class="lead">계정 상태를 확인할 수 있습니다.</p>
-        </section>
+    <div class="hero">
+        <div class="eyebrow">Account</div>
+        <h1>내 계정</h1>
+        <p class="lead">BJ Auth 계정 정보를 확인할 수 있습니다.</p>
+    </div>
 
-        <section class="body">
-            <div class="card">
-                <h2>Profile</h2>
-                <p>현재 로그인된 계정을 확인합니다.</p>
-            </div>
-
-            <div class="actions">
-                <form th:action="@{/logout}" method="post">
-                    <button type="submit">Logout</button>
-                </form>
-            </div>
-        </section>
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="info-label">서비스</div>
+            <div class="info-value">BJ Auth</div>
+        </div>
+        <div class="info-card">
+            <div class="info-label">상태</div>
+            <div class="info-value">활성</div>
+        </div>
     </div>
 </main>
 </body>
